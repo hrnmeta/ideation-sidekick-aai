@@ -240,10 +240,20 @@ pattern is one cluster, not N findings.
 
 Gate 1 — one markdown section per task: `### <name>`, a bold one-line
 meta (track · latest job date · verdict · validation OK/PENDING ·
-freshness OK/STALE), then Summary (2–3 lines) and Failure modes (short
-bullets; task-local fix notes shrink to a single bullet when warranted).
-Then Follow-on ideas — one list of 3–5 per task, no Improve/Generalize/
-Twists subsections. Each idea carries a direction label (twist,
+`<solver> <rate>`), then standalone bold section labels `**Summary**`
+(2–3 lines) and `**Failure modes**` (short bullets; task-local fix
+notes shrink to a single bullet when warranted). Then a standalone
+bold `**Follow-on ideas**` label with one list of 3–5 per task, no
+Improve/Generalize/Twists subsections. Meta rate rule: the rate is the
+latest job's internal-model pass rate — Avocado partial-pass first,
+otherwise whichever internal solver ran (Watermelon, Muse, Metacode),
+named explicitly; external-model results never appear in the meta
+line. Multi-step jobs list per-step compact rates (e.g. `Avocado s1
+5/5 · s2 0/5`), collapsing to one rate when steps agree and switching
+to bottleneck form past ~4 steps (e.g. `Avocado 8/15, bottleneck s3
+0/5`); rank and cluster on the bottleneck step. The ~6-week STALE tag
+moves out of the meta line onto the stale evidence inline in the
+body. Each idea carries a direction label (twist,
 generalization, new context/setup, hardening, extension) and must be
 submittable as a distinct task: a different domain, use case, or solver
 deliverable from the source task, never a rewording. Hidden-test-only,
@@ -269,11 +279,18 @@ numeric thresholds, spec clauses). Multiple examples are welcome when
 each clears the quality bar — each must change what the solver has to
 do or what the verifier grades. Near-duplicate variants grading the
 same lever fail the bar: quality first, never quantity for its own sake.
-Readability: blank lines only between tasks and between top-level
-sections — never between bullets in a list; bullets separated by single
-newlines, with no gap between an idea and its why. Bold idea names with
-direction labels; tables only for compact comparable facts such as
-review verdicts. Tone is guidance for engineers — approachable and
+Readability: blank lines only between tasks and before each
+standalone bold section label — never between bullets in a list; bullets separated by single
+newlines, with no gap between an idea and its why. Name each idea
+with a short inline bold lead stating the actionable move (what
+to build or grade, e.g. Grade cascade recomputation under stage
+caps) — never an invented fancy title; the direction label follows
+in parentheses (e.g. hardening plus extension). Markdown has no
+second weight of bold, so the hierarchy comes from placement and
+brevity: section labels stand alone on their own line (most
+prominent), while idea leads stay inline at the start of their
+bullet and stay short — a few words — so they read lighter.
+Tables only for compact comparable facts such as review verdicts. Tone is guidance for engineers — approachable and
 concrete, jargon only where it names scaffolding. Capitalize the first
 word after a colon.
 Gate-control rule: each gate ends your turn to await the user's reply.
