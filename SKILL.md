@@ -46,30 +46,23 @@ question: ...").
    may still render its own escape row; treat escape as invalid here and
    re-ask self-contained.
 3. Which tracks?
-   - [Charter track] (your current track) — only when read directly
-     from AMT; listed first as the default. No (recommended) tags
-     on this question — order conveys the default.
-   - [Newest-task track] (from your newest task) — fallback only,
-     never presented as your current track. Omitted when it matches
-     the charter track.
+   - [Newest-task track] (from your newest task) — best effort only,
+     listed first as the default. Never presented as your current
+     track. No (recommended) tags on this question — order conveys
+     the default.
    - Any track
-   On total detection failure omit both track options and say
+   On detection failure omit the newest-task option and say
    detection failed so Any track is the default.
    A task belongs to one track, not all, hence "Any track".
    Ask exactly "Which tracks?" with no notes hint in the question text.
    Do not add a separate Custom option: the client's escape row is the
-   typing path. Track detection, in order, never guessing: (1) `meta
-   ado-amt.pod list` — a non-empty track column is your current track;
-   (2) the AMT profile page
-   (`https://ado-amt.internalmeta.com/person/<unixname>`) via the
-   session's web tooling — a track read there is equally authoritative;
-   (3) newest-task fallback: `meta codimango.task list --filter mine
-   --as-json`, newest task's track assignment (e.g. swe-bench long
-   horizon). Sources (1) and (2) earn the "(your current track)"
-   label; source (3) is always labeled "(from your newest task)" —
-   presenting it as the current track misinforms the user and
-   undermines trust. Omit an option whose source failed rather than
-   guessing. When escape is used
+   typing path. Track detection: `meta codimango.task list --filter
+   mine --as-json`, newest task's track assignment (e.g. swe-bench
+   long horizon), always labeled "(from your newest task)" — never
+   "(your current track)". (The AMT charter chain is parked in
+   extension.md until a working endpoint exists; do not reconstruct
+   it.) Omit the option on fetch failure rather than guessing. When
+   escape is used
    or details were skipped, immediately follow up self-contained for the
    specific track names (swe_bench_pro, tbench, web_craft, swe_bench_1p,
    intelligence, other). Do not assume Tab or escape was used.
