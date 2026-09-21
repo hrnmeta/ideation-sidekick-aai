@@ -46,18 +46,30 @@ question: ...").
    may still render its own escape row; treat escape as invalid here and
    re-ask self-contained.
 3. Which tracks?
-   - [Detected track] (your current track) — best effort only; listed
-     first as the default. On detection failure omit this option and say
-     detection failed so Any track is the default. No (recommended) tags
+   - [Charter track] (your current track) — only when read directly
+     from AMT; listed first as the default. No (recommended) tags
      on this question — order conveys the default.
+   - [Newest-task track] (from your newest task) — fallback only,
+     never presented as your current track. Omitted when it matches
+     the charter track.
    - Any track
+   On total detection failure omit both track options and say
+   detection failed so Any track is the default.
    A task belongs to one track, not all, hence "Any track".
    Ask exactly "Which tracks?" with no notes hint in the question text.
    Do not add a separate Custom option: the client's escape row is the
-   typing path. Best-effort current-track detection: try `meta
-   codimango.task list --filter mine --as-json`, take the newest task's
-   track assignment (e.g. swe-bench long horizon); on any fetch failure,
-   omit the current-track option rather than guessing. When escape is used
+   typing path. Track detection, in order, never guessing: (1) `meta
+   ado-amt.pod list` — a non-empty track column is your current track;
+   (2) the AMT profile page
+   (`https://ado-amt.internalmeta.com/person/<unixname>`) via the
+   session's web tooling — a track read there is equally authoritative;
+   (3) newest-task fallback: `meta codimango.task list --filter mine
+   --as-json`, newest task's track assignment (e.g. swe-bench long
+   horizon). Sources (1) and (2) earn the "(your current track)"
+   label; source (3) is always labeled "(from your newest task)" —
+   presenting it as the current track misinforms the user and
+   undermines trust. Omit an option whose source failed rather than
+   guessing. When escape is used
    or details were skipped, immediately follow up self-contained for the
    specific track names (swe_bench_pro, tbench, web_craft, swe_bench_1p,
    intelligence, other). Do not assume Tab or escape was used.
@@ -128,7 +140,14 @@ Step 0, prerequisites (self-heal what needs no human; hand over the rest):
 Primary (codimango CLI), track-agnostic by construction:
 1. Task set from §2 (already listed — do not re-list).
 2. `codimango api jobs list <task> --json --include-agentic-review none`
-   — small payload; take the latest job (commit SHA + date).
+   — small payload; take the latest job (commit SHA + date) that holds
+   solve trials. Jobs can be review-only (a single agentic-review
+   trial, no solver runs) — check `trials list <job-id> --json
+   --exclude-verification` and step back to the newest job with
+   non-empty solve trials. Verification stages (oracle,
+   test-patch-validation, agentic-review) never count as solve trials:
+   oracle passes by running the reference solution and inflates pass
+   rates.
 3. `codimango api jobs review <task> --json` — versioned structured
    rubric checks plus author feedback, including the Agentic Full-Task
    Review and the quality-review agent output (both live in this payload;
@@ -139,9 +158,14 @@ Primary (codimango CLI), track-agnostic by construction:
    per-task `jobs review` for tasks missing detail.
 4. Only for representative failures: `codimango api trials analysis
    <trial-id>` — cached analysis, no compute. Resolve trial IDs via
-   `trials list <job-id>` (job IDs come from review-all or jobs
-   review). Analysis does not exist for every trial — skip those
-   silently. Cap at ~5 reads a session.
+   `trials list <job-id> --json --exclude-verification` (job IDs come
+   from review-all or jobs review). When cached analysis is missing or
+   empty, fall back in order: the trial summaries themselves
+   (per-trial outcome, stage, duration, exception), then `codimango api
+   tasks show <task>` for step structure, then `meta
+   codimango.multi-step-viewer view --task <name>` — never substitute
+   task-definition reading for missing failure evidence, and never stop
+   at the first empty cache. Cap at ~5 reads a session.
 
 Fallback (`meta` CLI — render outputs generically):
 `meta codimango.task list`, `meta codimango.multi-step-viewer view
@@ -166,13 +190,20 @@ source first: (1) user-supplied panel snapshot or coverage link;
 `taxonomy-coverage`, `taxonomy-counts` on the codimango Nest site,
 fetched with the user's authenticated identity (unauthenticated
 requests fail — reuse the CLI session's identity; non-admin payloads
-may carry RAG only, which suffices); (3) the `ado-taxonomy-coverage`
-skill when installed — compose, do not reimplement. If every source
-fails, proceed with coverage bias off and say so.
+may carry RAG only, which suffices); (3) the "Taxonomy for Coding
+Agent" Google Doc (ID `1GwgJp8dqCd4-aTidHZadFXqPBXqXM0TBQ6XQTQYEFOo`),
+read via `meta google.docs`: the target-distribution tab
+(`t.ny74fq2mzemf`) names the under-targeted areas and supersedes the
+snapshot below whenever reachable, while the full-taxonomy tab
+(`t.0`) supplies cell vocabulary so DIRECT-GAP/ADJACENT-GAP/COVERED
+tags stay valid; (4) the `ado-taxonomy-coverage` skill when installed
+— compose, do not reimplement. If every source fails, proceed with
+coverage bias off and say so.
 
 Targets snapshot (Taxonomy for Coding Agent, targets-as-of 2026-05-17 —
-verify any twist-hinging cell against the panel; panel wins for
-currents, doc wins for targets):
+offline fallback only; the live target-distribution tab above wins
+whenever reachable. Verify any twist-hinging cell against the panel;
+panel wins for currents, live doc wins for targets):
 - Use cases: 10% each — Implement New Feature, Bug Fix, Understand,
   Iterate On Feature, Refactoring. 8% — Testing, Performance
   Optimization. 5% — Vibe/Greenfield, Reverse Engineering, Build/CI,
@@ -244,16 +275,21 @@ meta (track · latest job date · verdict · validation OK/PENDING ·
 (2–3 lines) and `**Failure modes**` (short bullets; task-local fix
 notes shrink to a single bullet when warranted). Then a standalone
 bold `**Follow-on ideas**` label with one list of 3–5 per task, no
-Improve/Generalize/Twists subsections. Meta rate rule: the rate is the
-latest job's internal-model pass rate — Avocado partial-pass first,
-otherwise whichever internal solver ran (Watermelon, Muse, Metacode),
-named explicitly; external-model results never appear in the meta
-line. Multi-step jobs list per-step compact rates (e.g. `Avocado s1
-5/5 · s2 0/5`), collapsing to one rate when steps agree and switching
-to bottleneck form past ~4 steps (e.g. `Avocado 8/15, bottleneck s3
-0/5`); rank and cluster on the bottleneck step. The ~6-week STALE tag
-moves out of the meta line onto the stale evidence inline in the
-body. Each idea carries a direction label (twist,
+Improve/Generalize/Twists subsections. Meta rate rule: the rate is the latest commit's internal-model pass
+rate — Avocado partial-pass first, otherwise whichever internal
+solver ran (Watermelon, Muse, Metacode), named explicitly;
+external-model results never appear in the meta line. `jobs review`
+carries no step rates and the latest job can be review-only, so
+multi-step tasks mirror the portal's pull metrics: `Avocado s1 4/5 →
+s2 4/5 · task ~64%`, sourced from `meta codimango.multi-step-viewer
+view --task <name>` (latest commit section). `task ~z%` is the joint
+rate — trials passing all steps divided by total — never the product
+of step rates. Single-step tasks keep the bare form (`Avocado 4/5`,
+no s1 label), aggregated from `trials list --json
+--exclude-verification` on the latest job with solve trials. Past ~4
+steps use bottleneck form (`Avocado 8/15, bottleneck s3 0/5`); rank
+and cluster on the bottleneck step. The ~6-week STALE tag moves out
+of the meta line onto the stale evidence inline in the body. Each idea carries a direction label (twist,
 generalization, new context/setup, hardening, extension) and must be
 submittable as a distinct task: a different domain, use case, or solver
 deliverable from the source task, never a rewording. Hidden-test-only,
