@@ -37,8 +37,8 @@ question: ...").
 
 1. How should I pick tasks?
    - Richest failure signal (recommended)
-   - Newest regardless of status
    - Highest difficulty first
+   - Newest regardless of status
 2. Bias ideation toward under-targeted taxonomy areas?
    - On (recommended)
    - Off
