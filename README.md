@@ -16,17 +16,19 @@ git clone https://github.com/hrnmeta/ideation-sidekick-aai.git
 muse skills install ./ideation-sidekick-aai --scope user
 ```
 
-2. Install the codimango CLI -- this is a separate install, the skill
-does not include the binary (Macs: take "codimango" from alacarte;
-devservers: `devfeature install codimango --persist`; otherwise
-`uv tool install` the wheel URL from the AAI onboarding docs). The
-installers put it on PATH; confirm:
+2. Paste this block (it is idempotent -- safe to re-run):
 
 ```bash
+grep -qxF 'export PATH="$HOME/.local/bin:$PATH"' ~/.zshrc || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
 which codimango && codimango --version
 ```
 
-Nothing below works until that resolves.
+A version number means you are done with this step. If `which` still
+finds nothing, install the binary first, then re-paste the block:
+devservers run `devfeature install codimango --persist`; Macs without
+it take "codimango" from alacarte, or `uv tool install` the wheel URL
+from the AAI onboarding docs.
 
 3. Authenticate codimango (one-time):
 
@@ -42,8 +44,7 @@ logged-in browser, copy the token, paste it at the prompt. Verify with
 (`search-idea`) and submit handoff (`create-idea`). Without it the skill
 prints those commands for you to run instead.
 
-5. Enter Muse Code (`muse` in a terminal) and start a run -- this is
-the only step that needs the agent:
+5. Enter Muse Code (`muse` in a terminal) and use the skill. The autocomplete should show the skill if it's properly installed:
 
 ```text
 /ideation-sidekick-aai
