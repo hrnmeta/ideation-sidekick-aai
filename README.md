@@ -16,15 +16,9 @@ git clone https://github.com/hrnmeta/ideation-sidekick-aai.git
 muse skills install ./ideation-sidekick-aai --scope user
 ```
 
-2. Install the current codimango CLI. Delete the dead legacy copy
-first (it prints a migration banner instead of running):
-
-```bash
-rm -f ~/.local/bin/codimango
-```
-
-Macs: open https://www.internalfb.com/alacarte and install
-"codimango". Devservers: `devfeature install codimango --persist`.
+2. Install the current codimango CLI. Macs: open
+https://www.internalfb.com/alacarte and install "codimango".
+Devservers: `devfeature install codimango --persist`.
 
 3. Authenticate (one-time; re-running is harmless if already done):
 
@@ -40,7 +34,10 @@ codimango health
 ```
 
 It proves the binary and the token in one shot -- anything failing
-before this point means step 2 or 3 needs a re-run.
+before this point means step 2 or 3 needs a re-run. If `health` prints
+a migration banner instead of passing, a dead legacy copy in
+`~/.local/bin` is shadowing the new one: delete just that file
+(`rm -f ~/.local/bin/codimango`) and re-run `health`.
 
 4. Enter Muse Code (`muse` in a terminal) and use the skill. The autocomplete should show the skill if it's properly installed:
 

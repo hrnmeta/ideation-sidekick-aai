@@ -122,12 +122,14 @@ jobs, never download full trial trajectories.
 
 Step 0, prerequisites (self-heal what needs no human; hand over the rest):
 - `codimango` check: if `which codimango` misses, or any invocation
-  prints the fbcode migration banner, the usable CLI is missing (a copy
-  in `~/.local/bin` is the dead legacy one) → stop: delete it
-  (`rm -f ~/.local/bin/codimango`), install the current fbcode CLI
-  (Macs: open https://www.internalfb.com/alacarte and install
-  "codimango"; devservers: `devfeature install codimango --persist`),
-  then re-invoke. Do not install it yourself and do not rearrange PATH.
+  prints the fbcode migration banner, the usable CLI is missing → stop:
+  install the current fbcode CLI (Macs: open
+  https://www.internalfb.com/alacarte and install "codimango";
+  devservers: `devfeature install codimango --persist`), then re-invoke.
+  If a dead legacy copy in `~/.local/bin` is shadowing the new one, ask
+  the user to delete just that file before reinstalling. Do not delete
+  anything yourself, do not install anything yourself, and do not
+  rearrange PATH.
 - The legacy deprecation banner is a warning, not a failure: it goes to
   stderr while valid JSON still returns on stdout. Redirect stderr away
   from JSON parses (`2>/dev/null`) and proceed whenever commands exit 0
