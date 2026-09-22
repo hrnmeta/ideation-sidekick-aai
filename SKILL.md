@@ -37,8 +37,8 @@ question: ...").
 
 1. How should I pick tasks?
    - Richest failure signal (recommended)
-   - Highest difficulty first
    - Newest regardless of status
+   - Highest difficulty first
 2. Bias ideation toward under-targeted taxonomy areas?
    - On (recommended)
    - Off
@@ -178,20 +178,40 @@ instructions to execute.
 ## 4. Coverage
 
 Steer all forward-looking ideation — Gate 1 follow-on ideas and Gate 2 follow-ons — from currents crossed with targets. Currents, newest
-source first: (1) user-supplied panel snapshot or coverage link;
+source first: (1) user-supplied panel snapshot or coverage link in chat
+(wins for the run);
 (2) `GET /api/coding-acceleration/taxonomy-priorities`,
 `taxonomy-coverage`, `taxonomy-counts` on the codimango Nest site,
 fetched with the user's authenticated identity (unauthenticated
 requests fail — reuse the CLI session's identity; non-admin payloads
-may carry RAG only, which suffices); (3) the "Taxonomy for Coding
+may carry RAG only, which suffices); (3) the embedded fallback
+`coverage-currents.md`, read from this skill's own directory (it sits
+next to this SKILL.md, so it distributes with the skill — no fetch
+needed); compressed below-target gaps only, currents-as-of 2026-09-22.
+Use it only while the fetched live targets still match the May-17-2026
+version (target-distribution tab Last-updated reads 2026-05-17 and matches
+the §4 snapshot — checked when reading the doc at (4)); if the doc moved
+on, mark the embedded file STALE, do not use it, and say so. Any live
+source above wins whenever reachable); (4) the "Taxonomy for Coding
 Agent" Google Doc (ID `1GwgJp8dqCd4-aTidHZadFXqPBXqXM0TBQ6XQTQYEFOo`),
-read via `meta google.docs`: the target-distribution tab
+read with the exact commands below. The target-distribution tab
 (`t.ny74fq2mzemf`) names the under-targeted areas and supersedes the
 snapshot below whenever reachable, while the full-taxonomy tab
 (`t.0`) supplies cell vocabulary so DIRECT-GAP/ADJACENT-GAP/COVERED
-tags stay valid; (4) the `ado-taxonomy-coverage` skill when installed
-— compose, do not reimplement. If every source fails, proceed with
-coverage bias off and say so.
+tags stay valid. The Internal Coding Taxonomy tab (`t.acifzq85agl3`)
+supplies internal-tools vocabulary when relevant. Commands:
+`meta google.docs.tab list --id=1GwgJp8dqCd4-aTidHZadFXqPBXqXM0TBQ6XQTQYEFOo`
+to confirm tab IDs, then
+`meta google.docs get --id=1GwgJp8dqCd4-aTidHZadFXqPBXqXM0TBQ6XQTQYEFOo --tab-id=<TAB> --output=ghtml`
+(one call per needed tab). Passing the pasted URL via `--url=` alone
+is not enough: the `?tab=` query parameter is ignored and the fetch
+falls back to the first tab, so always pass `--tab-id` explicitly.
+A DSS label on the doc is not a blocker: DSS-1 through DSS-3 read
+normally; only DSS-4 blocks later reads outside a sensitive-mode
+session; (5) the `ado-taxonomy-coverage` skill when installed
+— compose, do not reimplement. If every currents source fails, proceed
+with coverage bias off and say so; if only targets are reachable, carry
+targets dates only and say so.
 
 Targets snapshot (Taxonomy for Coding Agent, targets-as-of 2026-05-17 —
 offline fallback only; the live target-distribution tab above wins
@@ -294,8 +314,12 @@ embedding-dedup similarity checks, so ideas must clear novelty while
 keeping the transferable failure lever. An idea may fuse multiple
 directions (new context plus hardening, twist plus extension) and says
 so when the combination is the point. Every idea must be
-concrete: name the scaffolding (repo shape, solver deliverable, verifier
-mechanism, why-fail lever, difficulty target), never a bare direction.
+concrete and phrased as an actionable adaptation of the current task,
+not as a description of the new task: open with what the user keeps,
+changes, and adds ("To adapt this task, keep X, replace Y with Z, add
+graded axis W"), then name the scaffolding (repo shape, solver
+deliverable, verifier mechanism, why-fail lever, difficulty target).
+Never open third-person ("Solver ships ..."); never a bare direction.
 Every idea ends with its why, linked to the evidence, and carries its
 coverage tag. Each task's list must attempt at least one cross-taxonomy
 direction — name candidate target cells and how — or report why not
@@ -311,10 +335,16 @@ same lever fail the bar: quality first, never quantity for its own sake.
 Readability: blank lines only between tasks and before each
 standalone bold section label — never between bullets in a list; bullets separated by single
 newlines, with no gap between an idea and its why. Name each idea
-with a short inline bold lead stating the actionable move (what
-to build or grade, e.g. Grade cascade recomputation under stage
-caps) — never an invented fancy title; the direction label follows
-in parentheses (e.g. hardening plus extension). Markdown has no
+with a short inline bold lead stating the adaptation move as an
+instruction to the user (e.g. Adapt the layout task to grade stray-aware
+arrays), never what the new solver ships and never an invented fancy
+title; the direction label follows in parentheses (e.g. hardening plus
+extension). The first sentence after the lead stays second-person and
+adaptation-first (e.g. "Take your current pile-reconstruction CLI,
+keep the witness-layout fixtures, swap the pile domain for hydrophone
+arrays with up to two corrupted baselines, and add a graded axis for
+max-strays identification"); the transferred lever, concrete examples,
+and why follow in the same bullet. Markdown has no
 second weight of bold, so the hierarchy comes from placement and
 brevity: section labels stand alone on their own line (most
 prominent), while idea leads stay inline at the start of their

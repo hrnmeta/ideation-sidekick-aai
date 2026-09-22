@@ -1,4 +1,4 @@
-# extension.md — PARKED snippets, not part of the skill
+# amt-extension.md — PARKED snippets, not part of the skill
 
 Nothing in this file is active. The skill (`SKILL.md`) never references
 this file at runtime; it exists only so removed-but-valuable rules can
