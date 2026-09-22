@@ -3,7 +3,7 @@
 A Muse skill that turns your own AAI tasks' agent failure signals into
 concrete follow-on task ideas (hardening, twists, generalizations,
 extensions), biased toward under-targeted taxonomy coverage. It runs in
-Muse Code (the `muse` CLI) on a Meta first-party model -- that is also
+Muse Code (the `muse` CLI) on Muse -- that is also
 where you invoke it, from any directory, as `/ideation-sidekick-aai`.
 
 ## Install
@@ -16,35 +16,33 @@ git clone https://github.com/hrnmeta/ideation-sidekick-aai.git
 muse skills install ./ideation-sidekick-aai --scope user
 ```
 
-2. Paste this block (it is idempotent -- safe to re-run):
+2. Install the current codimango CLI. Delete the dead legacy copy
+first (it prints a migration banner instead of running):
 
 ```bash
-grep -qxF 'export PATH="$HOME/.local/bin:$PATH"' ~/.zshrc || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc
-which codimango && codimango --version
+rm -f ~/.local/bin/codimango
 ```
 
-A version number means you are done with this step. If `which` still
-finds nothing, install the binary first, then re-paste the block:
-devservers run `devfeature install codimango --persist`; Macs without
-it take "codimango" from alacarte, or `uv tool install` the wheel URL
-from the AAI onboarding docs.
+Macs: open https://www.internalfb.com/alacarte and install
+"codimango". Devservers: `devfeature install codimango --persist`.
 
-3. Authenticate codimango (one-time):
+3. Authenticate (one-time; re-running is harmless if already done):
 
 ```bash
 codimango auth setup
 ```
 
-Open https://www.internalfb.com/intern/oauth/1500551877913604 in a
-logged-in browser, copy the token, paste it at the prompt. Verify with
-`codimango health`; re-run setup when the token expires.
+Open the link the command prints in a logged-in browser, copy the
+token, paste it at the prompt. This must pass:
 
-4. Recommended: install the team-aai plugin, for the novelty pre-check
-(`search-idea`) and submit handoff (`create-idea`). Without it the skill
-prints those commands for you to run instead.
+```bash
+codimango health
+```
 
-5. Enter Muse Code (`muse` in a terminal) and use the skill. The autocomplete should show the skill if it's properly installed:
+It proves the binary and the token in one shot -- anything failing
+before this point means step 2 or 3 needs a re-run.
+
+4. Enter Muse Code (`muse` in a terminal) and use the skill. The autocomplete should show the skill if it's properly installed:
 
 ```text
 /ideation-sidekick-aai
