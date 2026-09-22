@@ -32,31 +32,27 @@ with brief feedback before asking the next. Never use plain numbered
 lists alone; never depend on reply-box mechanics you cannot see.
 "Gate 0" is an internal label — never say it (or any gate name or
 number) to the user. Introduce each step by what it is asking instead
-(e.g. "First, which tracks?", "Next, ...", "Last setup
-question: ..."). Scope narrows downstream: track first, then pick mode,
-then coverage bias.
+(e.g. "First, which track, or a specific task?", "Next, ...",
+"Last setup question: ..."). Scope narrows downstream: track first,
+then pick mode, then coverage bias.
 
-1. Which tracks?
-   - [Newest-task track] (from your newest task) — best effort only,
-     listed first as the default. Never presented as your current
-     track. No (recommended) tags on this question — order conveys
-     the default.
+1. Which track, or a specific task?
    - Any track
-   On detection failure omit the newest-task option and say
-   detection failed so Any track is the default.
-   A task belongs to one track, not all, hence "Any track".
-   Ask exactly "Which tracks?" with no notes hint in the question text.
-   Do not add a separate Custom option: the client's escape row is the
-   typing path. Track detection: `meta codimango.task list --filter
-   mine --as-json`, newest task's track assignment (e.g. swe-bench
-   long horizon), always labeled "(from your newest task)" — never
-   "(your current track)". (The AMT charter chain is parked outside
-   this bundle until a working endpoint exists; do not reconstruct
-   it.) Omit the option on fetch failure rather than guessing. When
-   escape is used
-   or details were skipped, immediately follow up self-contained for the
-   specific track names (swe_bench_pro, tbench, web_craft, swe_bench_1p,
-   intelligence, other). Do not assume Tab or escape was used.
+   - swe_bench_pro
+   - tbench
+   - web_craft
+   - swe_bench_1p
+   - intelligence
+   - other
+   A task belongs to
+   one track, not all, hence "Any track". Ask exactly "Which track, or
+   a specific task?" with no notes hint in the question text. No
+   (recommended) tags and no newest-task default on this question. Do
+   not add a separate Custom option: the client's escape row is the
+   typing path — a specific task name typed there (or in chat) selects
+   that task directly and skips track filtering for it. (The AMT charter
+   chain is parked outside this bundle until a working endpoint exists;
+   do not reconstruct it.)
 2. How should I pick tasks?
    - Richest failure signal (recommended)
    - Newest regardless of status
@@ -105,8 +101,8 @@ staleness — within a band, fresh outranks STALE and otherwise recency
 breaks ties, but quality and difficulty outrank recency across bands.
 A task whose review status looks bad but whose Avocado pass is full
 (e.g. 5/5) is excluded — status without a solver failure is not a
-failure signal. The newest task sets the track default only — being the
-track anchor never earns it a deep-read slot. List once, then fill at
+failure signal. A user-named task is always picked — the user asked for
+it, even if PENDING. Otherwise no task gets a slot by default. List once, then fill at
 most 3 deep-read slots (§3 steps 2–4) exclusively from bands 1–2, i.e.
 tasks with real solve trials plus structured review: a PENDING or
 no-solve-trial task takes a slot only when the user names it or when no
