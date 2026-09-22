@@ -1,66 +1,47 @@
-# ideation-sidekick-aai — backup repo
+# ideation-sidekick-aai
 
-Dedicated backup history for the `ideation-sidekick-aai` skill.
+A Muse skill that turns your own AAI tasks' agent failure signals into
+concrete follow-on task ideas (hardening, twists, generalizations,
+extensions), biased toward under-targeted taxonomy coverage.
 
-- **Source of truth (edited directly):**
-  `/Users/hrn/.config/muse/skills/ideation-sidekick-aai/SKILL.md`
-- **This repo:** point-in-time backups only. Nothing here is loaded by Muse.
-
-## Install (self)
-
-Install (user scope, available in every directory):
+## Install
 
 ```bash
-muse skills install /Users/hrn/.config/muse/skills/ideation-sidekick-aai --scope user
+git clone https://github.com/hrnmeta/ideation-sidekick-aai.git
+muse skills install ./ideation-sidekick-aai --scope user
 ```
 
-Reinstall after updates (overwrites the installed copy):
-
-```bash
-muse skills install /Users/hrn/.config/muse/skills/ideation-sidekick-aai --scope user --force
-```
-
-Invoke in Metacode, from any directory:
+Then invoke from any directory:
 
 ```text
 /ideation-sidekick-aai
 ```
 
-Note: `--scope user` is what lands the skill in user config (every
-directory, not just one project), and the invoke name is
-`/ideation-sidekick-aai` (the actual skill name).
+## Prerequisites
 
-## Distributing to others
+- codimango CLI on PATH and authenticated (one-time, needs a brief
+  browser step):
+  `codimango api setup && codimango api setup --nest`
+  (New install on Macs: take "codimango" from alacarte; on devservers:
+  `devfeature install codimango --persist`.)
+- Recommended: the team-aai plugin, for the novelty pre-check
+  (`search-idea`) and submit handoff (`create-idea`). Without it the
+  skill prints the commands for you to run instead.
 
-1. Commit and push the repo copy so recipients can check out the skill.
-2. Each recipient installs from their own checkout (same flags, their path):
-   `muse skills install <path-to-their-checkout> --scope user`
-   That copies the skill into their own user config, making
-   `/ideation-sidekick-aai` available in every directory for them.
-3. Each recipient also needs the appendix prerequisites: codimango CLI on
-   PATH plus `codimango api setup` (and `--nest`), and optionally the
-   `team-aai` plugin for the Gate 3–4 novelty/submit handoff.
-4. Two caveats worth telling them: the skill runs only on Meta
-   first-party models (it must refuse on Claude Code, Codex, Gemini),
-   and sessions snapshot the skill at start — after any update they must
-   reinstall and start a new session.
+## How a run goes
 
-## On-demand backup
+Three setup questions (track, how to pick tasks, coverage bias), then it
+ranks your tasks by failure richness, deep-reads up to 3, and prints
+per-task summaries, failure modes, and adaptation-style follow-on ideas
+with coverage tags. Follow-up gates draft submit fields, run the
+similarity pre-check, print the exact submit command (it never submits
+for you), and optionally scaffold the task repo.
 
-After iterating on the skill, run:
+## Caveats
 
-```bash
-./backup.sh
-```
-
-This copies the installed `SKILL.md` over this repo's copy, commits if it
-changed, and pushes to `origin` when a remote is configured.
-
-## Remote setup (one time)
-
-Create an empty **private** repo on GitHub, then:
-
-```bash
-git remote add origin git@github.com:<you>/ideation-sidekick-aai.git
-git push -u origin main
-```
+Unofficial tool, not part of team-aai. Meta first-party models only
+(Muse / Metacode / Avocado) — never 3P models; do not port it into
+Claude Code / Codex / Gemini harnesses. It only reads already-run
+evidence, so unvalidated tasks get text-only ideas. After any update,
+reinstall and start a new session (sessions snapshot the skill at
+start).

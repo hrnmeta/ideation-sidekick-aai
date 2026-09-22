@@ -50,8 +50,8 @@ then coverage bias.
    typing path. Track detection: `meta codimango.task list --filter
    mine --as-json`, newest task's track assignment (e.g. swe-bench
    long horizon), always labeled "(from your newest task)" — never
-   "(your current track)". (The AMT charter chain is parked in
-   amt-extension.md until a working endpoint exists; do not reconstruct
+   "(your current track)". (The AMT charter chain is parked outside
+   this bundle until a working endpoint exists; do not reconstruct
    it.) Omit the option on fetch failure rather than guessing. When
    escape is used
    or details were skipped, immediately follow up self-contained for the
@@ -195,15 +195,7 @@ source first: (1) user-supplied panel snapshot or coverage link in chat
 `taxonomy-coverage`, `taxonomy-counts` on the codimango Nest site,
 fetched with the user's authenticated identity (unauthenticated
 requests fail — reuse the CLI session's identity; non-admin payloads
-may carry RAG only, which suffices); (3) the embedded fallback
-`coverage-currents.md`, read from this skill's own directory (it sits
-next to this SKILL.md, so it distributes with the skill — no fetch
-needed); compressed below-target gaps only, currents-as-of 2026-09-22.
-Use it only while the fetched live targets still match the May-17-2026
-version (target-distribution tab Last-updated reads 2026-05-17 and matches
-the §4 snapshot — checked when reading the doc at (4)); if the doc moved
-on, mark the embedded file STALE, do not use it, and say so. Any live
-source above wins whenever reachable); (4) the "Taxonomy for Coding
+may carry RAG only, which suffices); (3) the "Taxonomy for Coding
 Agent" Google Doc (ID `1GwgJp8dqCd4-aTidHZadFXqPBXqXM0TBQ6XQTQYEFOo`),
 read with the exact commands below. The target-distribution tab
 (`t.ny74fq2mzemf`) names the under-targeted areas and supersedes the
@@ -219,7 +211,7 @@ is not enough: the `?tab=` query parameter is ignored and the fetch
 falls back to the first tab, so always pass `--tab-id` explicitly.
 A DSS label on the doc is not a blocker: DSS-1 through DSS-3 read
 normally; only DSS-4 blocks later reads outside a sensitive-mode
-session; (5) the `ado-taxonomy-coverage` skill when installed
+session; (4) the `ado-taxonomy-coverage` skill when installed
 — compose, do not reimplement. If every currents source fails, proceed
 with coverage bias off and say so; if only targets are reachable, carry
 targets dates only and say so.
