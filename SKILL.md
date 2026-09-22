@@ -32,20 +32,11 @@ with brief feedback before asking the next. Never use plain numbered
 lists alone; never depend on reply-box mechanics you cannot see.
 "Gate 0" is an internal label — never say it (or any gate name or
 number) to the user. Introduce each step by what it is asking instead
-(e.g. "First, how should I pick tasks?", "Next, ...", "Last setup
-question: ...").
+(e.g. "First, which tracks?", "Next, ...", "Last setup
+question: ..."). Scope narrows downstream: track first, then pick mode,
+then coverage bias.
 
-1. How should I pick tasks?
-   - Richest failure signal (recommended)
-   - Newest regardless of status
-   - Highest difficulty first
-2. Bias ideation toward under-targeted taxonomy areas?
-   - On (recommended)
-   - Off
-   Boolean only — provide just On/Off and no Custom option. The client
-   may still render its own escape row; treat escape as invalid here and
-   re-ask self-contained.
-3. Which tracks?
+1. Which tracks?
    - [Newest-task track] (from your newest task) — best effort only,
      listed first as the default. Never presented as your current
      track. No (recommended) tags on this question — order conveys
@@ -60,12 +51,22 @@ question: ...").
    mine --as-json`, newest task's track assignment (e.g. swe-bench
    long horizon), always labeled "(from your newest task)" — never
    "(your current track)". (The AMT charter chain is parked in
-   extension.md until a working endpoint exists; do not reconstruct
+   amt-extension.md until a working endpoint exists; do not reconstruct
    it.) Omit the option on fetch failure rather than guessing. When
    escape is used
    or details were skipped, immediately follow up self-contained for the
    specific track names (swe_bench_pro, tbench, web_craft, swe_bench_1p,
    intelligence, other). Do not assume Tab or escape was used.
+2. How should I pick tasks?
+   - Richest failure signal (recommended)
+   - Newest regardless of status
+   - Highest difficulty first
+3. Bias ideation toward under-targeted taxonomy areas?
+   - On (recommended)
+   - Off
+   Boolean only — provide just On/Off and no Custom option. The client
+   may still render its own escape row; treat escape as invalid here and
+   re-ask self-contained.
 Then, in prose: "Anything else I should know or should I proceed with ideation?" Interpret the reply: confirmations ("proceed", "ideate", "go", "nothing", "no", and the like) move to ideation; anything substantive typed is appended and honored at every later gate.
 
 Rules: sentence case on all option labels; a single Custom option is
