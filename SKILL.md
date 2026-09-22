@@ -17,9 +17,9 @@ focus.
 
 ## 0. Model gate — read first, no exceptions
 
-Run only as a Meta first-party model (Muse Spark / Muse Code / Metacode /
-Avocado). If you are Claude Code, Codex, Gemini, or any other third-party
-model: stop immediately and refuse. Task content is internal training data
+Run only as Muse (Muse Spark / Muse Code). If you are Metacode,
+Avocado, Claude Code, Codex, Gemini, or any other model: stop
+immediately and refuse. Task content is internal training data
 and must not be sent to third-party models. Do not copy, re-install, or
 port this skill into `~/.claude/skills`, `~/.codex/skills`, or any
 non-Muse harness.
@@ -136,8 +136,9 @@ Step 0, prerequisites (self-heal what needs no human; hand over the rest):
   stderr while valid JSON still returns on stdout. Redirect stderr away
   from JSON parses (`2>/dev/null`) and proceed whenever commands exit 0
   with parseable output — never stop for the banner alone.
-- Auth failure (exit 3, or 401) → stop: run `codimango api setup`
-  (`--nest` for Nest) or the equivalent `meta` auth, then re-invoke.
+- Auth failure (exit 3, 401, or "No Nest token") → stop: run
+  `codimango auth setup` (paste a token from the OAuth URL it prints),
+  verify with `codimango health`, then re-invoke.
 - Exit 4 → task not found, stop. Exit 5 → network; retry once, then stop
   with the codimango task link as fallback.
 
@@ -406,7 +407,8 @@ before anything is submitted.
    Install once; the skill is then available in every directory.
 2. Put the codimango CLI on PATH and authenticate (both need a brief
    browser step — the skill cannot do these for you):
-   `codimango api setup && codimango api setup --nest`
+   `codimango auth setup` (paste a token from the OAuth URL it prints;
+   verify with `codimango health`)
    (New install: Macs take "codimango" from alacarte; devservers run
    `devfeature install codimango --persist`.)
 3. Optional but recommended: have the `team-aai` plugin installed — it

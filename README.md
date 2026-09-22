@@ -2,31 +2,40 @@
 
 A Muse skill that turns your own AAI tasks' agent failure signals into
 concrete follow-on task ideas (hardening, twists, generalizations,
-extensions), biased toward under-targeted taxonomy coverage.
+extensions), biased toward under-targeted taxonomy coverage. It runs in
+Muse Code (the `muse` CLI) on a Meta first-party model -- that is also
+where you invoke it, from any directory, as `/ideation-sidekick-aai`.
 
 ## Install
+
+1. Clone and install (user scope, so it works in every directory):
 
 ```bash
 git clone https://github.com/hrnmeta/ideation-sidekick-aai.git
 muse skills install ./ideation-sidekick-aai --scope user
 ```
 
-Then invoke from any directory:
+2. Put the codimango CLI on PATH and authenticate it (one-time). If
+the binary is missing, install it first (Macs: take "codimango" from
+alacarte; devservers: `devfeature install codimango --persist`). Then:
+
+```bash
+codimango auth setup
+```
+
+Open https://www.internalfb.com/intern/oauth/1500551877913604 in a
+logged-in browser, copy the token, paste it at the prompt. Verify with
+`codimango health`; re-run setup when the token expires.
+
+3. Recommended: install the team-aai plugin, for the novelty pre-check
+(`search-idea`) and submit handoff (`create-idea`). Without it the skill
+prints those commands for you to run instead.
+
+Then start a run with:
 
 ```text
 /ideation-sidekick-aai
 ```
-
-## Prerequisites
-
-- codimango CLI on PATH and authenticated (one-time, needs a brief
-  browser step):
-  `codimango api setup && codimango api setup --nest`
-  (New install on Macs: take "codimango" from alacarte; on devservers:
-  `devfeature install codimango --persist`.)
-- Recommended: the team-aai plugin, for the novelty pre-check
-  (`search-idea`) and submit handoff (`create-idea`). Without it the
-  skill prints the commands for you to run instead.
 
 ## How a run goes
 
@@ -39,9 +48,8 @@ for you), and optionally scaffold the task repo.
 
 ## Caveats
 
-Unofficial tool, not part of team-aai. Meta first-party models only
-(Muse / Metacode / Avocado) — never 3P models; do not port it into
-Claude Code / Codex / Gemini harnesses. It only reads already-run
-evidence, so unvalidated tasks get text-only ideas. After any update,
-reinstall and start a new session (sessions snapshot the skill at
-start).
+Unofficial tool, not part of team-aai. Muse only (Muse Spark / Muse
+Code) -- not Metacode, and never 3P models; do not port it into other
+harnesses. It only reads already-run evidence, so
+unvalidated tasks get text-only ideas. After any update, reinstall and
+start a new session (sessions snapshot the skill at start).
