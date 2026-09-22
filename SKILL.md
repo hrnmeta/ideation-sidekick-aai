@@ -95,15 +95,25 @@ difficulty — Avocado pass below 3/5 — and (c) richness and extendability
 of the failure reasons (failure modes that can seed follow-on tasks).
 Never mine Avocado full-pass tasks (5/5): a full pass has no failure to
 mine unless the user asks. Order: (1) validated and challenging (both
-reviews present, Avocado below 3/5), newest first; (2) validated but
-older, or challenging with partial validation, newest first; (3) newest
-unreviewed or validation-PENDING. Models improve over time so older
-signals risk staleness — recency breaks ties within a band, but quality
-and difficulty outrank recency across bands. A task whose review status
-looks bad but whose Avocado pass is full (e.g. 5/5) is excluded — status
-without a solver failure is not a failure signal. List once,
-deep-read at most 3 tasks (§3 steps 2–4). Say which tasks you picked
-and why, one line each. Confirm Gate 0 completion
+reviews present, Avocado below 3/5), newest first, fresh (latest solve
+evidence within ~6 weeks) before STALE; (2) validated but older, or
+challenging with partial validation, newest first, fresh before STALE;
+(3) newest unreviewed or validation-PENDING — never a deep-read pick
+(see slot rule below). Models improve over time so older signals risk
+staleness — within a band, fresh outranks STALE and otherwise recency
+breaks ties, but quality and difficulty outrank recency across bands.
+A task whose review status looks bad but whose Avocado pass is full
+(e.g. 5/5) is excluded — status without a solver failure is not a
+failure signal. The newest task sets the track default only — being the
+track anchor never earns it a deep-read slot. List once, then fill at
+most 3 deep-read slots (§3 steps 2–4) exclusively from bands 1–2, i.e.
+tasks with real solve trials plus structured review: a PENDING or
+no-solve-trial task takes a slot only when the user names it or when no
+band 1–2 task exists in scope — otherwise it gets a one-line
+validate-first note and no ideas. When the selected track yields fewer
+than 2 slot-worthy tasks, backfill remaining slots (up to 3 total) from
+the user's other tracks by the same ranking, tagged BACKFILL. Say which
+tasks you picked and why, one line each. Confirm Gate 0 completion
 with "Requirements received. Ideation in progress. This may take a few minutes."
 If the user has no tasks or ideas, ask for focus areas and a starting
 task.
