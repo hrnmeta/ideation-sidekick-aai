@@ -8,16 +8,27 @@ where you invoke it, from any directory, as `/ideation-sidekick-aai`.
 
 ## Install
 
-1. Clone and install (user scope, so it works in every directory):
+1. Clone and install the skill (user scope, so it works in every
+directory):
 
 ```bash
 git clone https://github.com/hrnmeta/ideation-sidekick-aai.git
 muse skills install ./ideation-sidekick-aai --scope user
 ```
 
-2. Put the codimango CLI on PATH and authenticate it (one-time). If
-the binary is missing, install it first (Macs: take "codimango" from
-alacarte; devservers: `devfeature install codimango --persist`). Then:
+2. Install the codimango CLI -- this is a separate install, the skill
+does not include the binary (Macs: take "codimango" from alacarte;
+devservers: `devfeature install codimango --persist`; otherwise
+`uv tool install` the wheel URL from the AAI onboarding docs). The
+installers put it on PATH; confirm:
+
+```bash
+which codimango && codimango --version
+```
+
+Nothing below works until that resolves.
+
+3. Authenticate codimango (one-time):
 
 ```bash
 codimango auth setup
@@ -27,11 +38,12 @@ Open https://www.internalfb.com/intern/oauth/1500551877913604 in a
 logged-in browser, copy the token, paste it at the prompt. Verify with
 `codimango health`; re-run setup when the token expires.
 
-3. Recommended: install the team-aai plugin, for the novelty pre-check
+4. Recommended: install the team-aai plugin, for the novelty pre-check
 (`search-idea`) and submit handoff (`create-idea`). Without it the skill
 prints those commands for you to run instead.
 
-Then start a run with:
+5. Enter Muse Code (`muse` in a terminal) and start a run -- this is
+the only step that needs the agent:
 
 ```text
 /ideation-sidekick-aai
