@@ -55,8 +55,8 @@ then pick mode, then coverage bias.
    do not reconstruct it.)
 2. How should I pick tasks?
    - Richest failure signal (recommended)
-   - Newest regardless of status
    - Highest difficulty first
+   - Newest regardless of status
 3. Bias ideation toward under-targeted taxonomy areas?
    - On (recommended)
    - Off
@@ -197,8 +197,9 @@ requests fail — reuse the CLI session's identity; non-admin payloads
 may carry RAG only, which suffices); (3) the "Taxonomy for Coding
 Agent" Google Doc (ID `1GwgJp8dqCd4-aTidHZadFXqPBXqXM0TBQ6XQTQYEFOo`),
 read with the exact commands below. The target-distribution tab
-(`t.ny74fq2mzemf`) names the under-targeted areas and supersedes the
-snapshot below whenever reachable, while the full-taxonomy tab
+(`t.ny74fq2mzemf`) is the single source of under-targeted areas —
+read targets from it on every run, never from memory, since
+distributions move; while the full-taxonomy tab
 (`t.0`) supplies cell vocabulary so DIRECT-GAP/ADJACENT-GAP/COVERED
 tags stay valid. The Internal Coding Taxonomy tab (`t.acifzq85agl3`)
 supplies internal-tools vocabulary when relevant. Commands:
@@ -213,29 +214,10 @@ normally; only DSS-4 blocks later reads outside a sensitive-mode
 session; (4) the `ado-taxonomy-coverage` skill when installed
 — compose, do not reimplement. If every currents source fails, proceed
 with coverage bias off and say so; if only targets are reachable, carry
-targets dates only and say so.
-
-Targets snapshot (Taxonomy for Coding Agent, targets-as-of 2026-05-17 —
-offline fallback only; the live target-distribution tab above wins
-whenever reachable. Verify any twist-hinging cell against the panel;
-panel wins for currents, live doc wins for targets):
-- Use cases: 10% each — Implement New Feature, Bug Fix, Understand,
-  Iterate On Feature, Refactoring. 8% — Testing, Performance
-  Optimization. 5% — Vibe/Greenfield, Reverse Engineering, Build/CI,
-  Analyze, Planning. 3% — Documentation, Operate, Dependency.
-- Domains (effective %): Infrastructure 25 (systems 6.25, ml_ai_infra
-  5.0, networking 3.75, distributed/backend/data_infra/build_ci 2.5).
-  Web 20 (backend 8, frontend 8, fullstack 4). Data 15 (ML 4.5,
-  scientific 4.5, data_science 3, analytics 3). Platform 15 (security
-  7.5, devops 4.5, source_control 3). Core CS 15 (multimedia 3,
-  compilers 2.25, graphics 2.25, algos/games 1.8, db internals 1.5,
-  formal/robotics 1.2). Mobile 5 (xplat 2, ios/android 1.5).
-  Professional Services 5 (legal/finance 1.25, healthcare 1,
-  consulting/insurance 0.75).
-- Languages: 10% — Python, C/C++, JS/TS, Rust, Java/Kotlin, Ruby, Go.
-  5% — Shell/Bash, PHP/Hack, HTML/CSS/LaTeX. 4% SQL. 3% R. 2% —
-  Assembly, Julia/Fortran/MATLAB. 1% — CUDA/Triton, Esoteric, Legacy,
-  Other/Mixed.
+targets dates only and say so. If the targets doc is unreachable, carry
+currents only, mark targets UNKNOWN, and say so — never reconstruct
+distributions from memory. Verify any twist-hinging cell against the
+panel; panel wins for currents, live doc wins for targets.
 
 Track-suitability gate: before proposing, test the use case against
 the target track's grading reality. SWE/TBench tasks need a code patch
@@ -243,8 +225,9 @@ plus automated pass/fail tests — free-text Understand-style tasks do
 not fit; reject the mismatch with reason instead of generating it.
 Domain and use-case gaps outrank language gaps. Annotate every Gate 1 follow-on idea and every Gate 2 follow-on:
 DIRECT-GAP, ADJACENT-GAP, or COVERED (covered twists need a difficulty
-or transfer justification), each with two dates — currents date and
-targets date. Panel labels name cells; doc labels name targets; say
+or transfer justification), each with the dates available — currents date and,
+when the targets doc was reachable, targets date (otherwise targets UNKNOWN).
+Panel labels name cells; doc labels name targets; say
 which is which.
 
 ## 5. Personalization profile — build, confirm, respect
